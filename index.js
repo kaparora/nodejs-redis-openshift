@@ -8,7 +8,7 @@ module.exports = function(opts){
   console.log('using redis server')
 
   var redisPort = opts.redis_port || process.env.REDIS_SERVICE_PORT || 6379
-  var redisHost = opts.redis_host || process.env.REDIS_SERVICE_PORT || 'redis'
+  var redisHost = opts.redis_host || process.env.REDIS_SERVICE_HOST || 'redis'
   var redisUser = process.env.REDIS_USER || 'user'
   var redisPassword = process.env.REDIS_PASSWORD || 'password'
   var redisDB = process.env.REDIS_DATABASE || 'sampledb'
