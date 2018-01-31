@@ -7,12 +7,17 @@ module.exports = function(opts){
 
   console.log('using redis server')
 
-  var port = opts.redis_port || process.env.USE_REDIS_PORT || 6379
-  var host = opts.redis_host || process.env.USE_REDIS_HOST || 'redis'
+  var redisPort = opts.redis_port || process.env.REDIS_SERVICE_PORT || 6379
+  var redisHost = opts.redis_host || process.env.REDIS_SERVICE_PORT || 'redis'
+  var redisUser = process.env.REDIS_USER || 'user',
+  var redisPassword = process.env.REDIS_PASSWORD || 'password',
+  var redisDB = process.env.REDIS_DATABASE || 'sampledb';
+
+  var redisURL = 'redis://' + redisUser + ':' + redisPassword + '@' + redisHost + ':' + redisPort;
 
   var connectionStatus = false
 
-  var client = redis.createClient(port, host, {})
+  var client = redis.createClient(redisURL, {no_ready_check: true})
   client.on('error', function(err){
     connectionStatus = false
     console.log('Error from the redis connection:')
@@ -28,8 +33,8 @@ module.exports = function(opts){
   })
 
   console.log('-------------------------------------------');
-  console.log('have host: ' + host)
-  console.log('have port: ' + port)
+  console.log('have host: ' + redisHost)
+  console.log('have port: ' + redisPort)
 
   var router = Router()
   var fileServer = ecstatic({ root: __dirname + '/client' })
