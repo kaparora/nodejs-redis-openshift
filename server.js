@@ -6,7 +6,7 @@ var args = require('minimist')(process.argv, {
     v:'verbose'
   },
   default:{
-    port:80
+    port:8080
   },
   boolean:['verbose']
 })
